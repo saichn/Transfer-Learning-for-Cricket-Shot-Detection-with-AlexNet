@@ -5,11 +5,8 @@ from src.model import get_model
 from src.utils import set_seed, get_data, show_images, plot_curves
 import os
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print(f"\n--- Using device: {device} ---\n")
 
-
-def run_for_epoch(model, dataloader, criterion, optimizer=None):
+def run_for_epoch(model, dataloader, criterion, optimizer, device):
     """
     Train or evaluate the model for one epoch.
 
@@ -18,6 +15,8 @@ def run_for_epoch(model, dataloader, criterion, optimizer=None):
         dataloader (DataLoader): DataLoader providing the input data.
         criterion (torch.nn.Module): Loss function to use.
         optimizer (torch.optim.Optimizer, optional): Optimizer for training. If None, evaluation is performed.
+        device (str or torch.device, optional): The device to use for computation.
+            Can be "cpu" or "cuda".
 
     Returns:
         dict: Dictionary containing average loss, accuracy, and lists of correct and incorrect images/labels.
@@ -35,6 +34,7 @@ def run_for_epoch(model, dataloader, criterion, optimizer=None):
         incorrect_predictions,
         incorrect_labels,
     ) = ([], [], [], [], [])
+
 
     with torch.set_grad_enabled(is_training):
         for inputs, labels in dataloader:
@@ -75,10 +75,25 @@ def run_for_epoch(model, dataloader, criterion, optimizer=None):
     }
 
 
-def train_model(args, num_epochs=10, seed=7777):
+def train_model(args, num_epochs, seed, device):
     """
-    Train the AlexNet model with the specified dataset.
+        Train the AlexNet model with the specified dataset.
+
+        Args:
+            args (argparse.Namespace): Parsed command-line arguments containing paths and settings.
+            num_epochs (int, optional): Number of epochs to train the model.
+            seed (int, optional): Random seed for reproducibility.
+            device (str, optional): The device to use for training. Can be "cpu" or "cuda".
+
+        Returns:
+            None: The function does not return any value. It saves the best model and visualizations.
+
+        This function handles the training process, including loading data,
+        initializing the model, and evaluating its performance. It saves
+        the best model based on test accuracy and plots loss and accuracy
+        curves at the end of training.
     """
+
     set_seed(seed)
 
     # Load data
@@ -109,8 +124,8 @@ def train_model(args, num_epochs=10, seed=7777):
     for epoch in range(1, num_epochs + 1):
         print(f"\n--- Epoch {epoch} ---")
 
-        train_results = run_for_epoch(model, trainloader, criterion, optimizer)
-        test_results = run_for_epoch(model, testloader, criterion)
+        train_results = run_for_epoch(model, trainloader, criterion, optimizer, device)
+        test_results = run_for_epoch(model, testloader, criterion, optimizer=None, device=device)
 
         train_losses.append(train_results["avg_loss"])
         train_accuracies.append(train_results["accuracy"])
@@ -134,6 +149,26 @@ def train_model(args, num_epochs=10, seed=7777):
             incorrect_images = test_results["incorrect_images"]
             incorrect_labels = test_results["incorrect_labels"]
             incorrect_predictions = test_results["incorrect_predictions"]
+
+    # Plot loss and accuracy curves
+    plot_curves(
+        train_losses,
+        test_losses,
+        "Epochs",
+        "Loss",
+        "Epochs vs Loss",
+        highlight="min",
+        filename=os.path.join(args.results_path, "train_and_test_losses.png"),
+    )
+    plot_curves(
+        train_accuracies,
+        test_accuracies,
+        "Epochs",
+        "Accuracy",
+        "Epochs vs Accuracy",
+        highlight="max",
+        filename=os.path.join(args.results_path, "train_and_test_accuracy.png"),
+    )
 
     # Display correct and incorrect classifications for best model
     print(
@@ -161,22 +196,3 @@ def train_model(args, num_epochs=10, seed=7777):
         ),
     )
 
-    # Plot loss and accuracy curves
-    plot_curves(
-        train_losses,
-        test_losses,
-        "Epochs",
-        "Loss",
-        "Epochs vs Loss",
-        highlight="min",
-        filename=os.path.join(args.results_path, "train_and_test_losses.png"),
-    )
-    plot_curves(
-        train_accuracies,
-        test_accuracies,
-        "Epochs",
-        "Accuracy",
-        "Epochs vs Accuracy",
-        highlight="max",
-        filename=os.path.join(args.results_path, "train_and_test_accuracy.png"),
-    )

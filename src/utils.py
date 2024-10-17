@@ -172,8 +172,28 @@ def create_symlinks(src_path, dst_path, label, images):
         if not os.path.islink(dst):
             os.symlink(src, dst)
 
+def get_transform():
+    """
+    Returns a composition of image transformations to be applied before inputting the image to the model.
 
-def get_data(input_data_path, working_data_path, seed=7777):
+    The transformations include:
+    - Resizing the image to a fixed size of 224x224 pixels (the standard input size for AlexNet).
+    - Converting the image to a PyTorch tensor.
+    - Normalizing the pixel values to have a mean of [0.5, 0.5, 0.5] and a standard deviation of [0.5, 0.5, 0.5]
+      across the RGB channels, which helps to scale the image to a standard range suitable for the pre-trained model.
+
+    Returns:
+        torchvision.transforms.Compose: A composition of transformations to be applied to the input images.
+    """
+    return transforms.Compose(
+        [
+            transforms.Resize((224, 224)),
+            transforms.ToTensor(),
+            transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5]),
+        ]
+    )
+
+def get_data(input_data_path, working_data_path, seed):
     """
     Load and split dataset into training and testing sets, then apply necessary transformations.
 
@@ -204,13 +224,7 @@ def get_data(input_data_path, working_data_path, seed=7777):
         create_symlinks(input_data_path, train_path, label, train_images)
         create_symlinks(input_data_path, test_path, label, test_images)
 
-    transform = transforms.Compose(
-        [
-            transforms.Resize((224, 224)),
-            transforms.ToTensor(),
-            transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5]),
-        ]
-    )
+    transform = get_transform()
 
     train_data = datasets.ImageFolder(train_path, transform=transform)
     trainloader = torch.utils.data.DataLoader(train_data, shuffle=True, batch_size=32)
