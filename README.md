@@ -117,20 +117,23 @@ This structure is expected by the training scripts:
     └── README.md              # Project documentation
 
 ## Modules
-## `utils.py`
+### `utils.py`
 Contains utility functions for setting seeds, un-normalizing images, displaying images, plotting training curves, and creating symbolic links for dataset organization.
 
-## `module.py`
+### `module.py`
 Defines the model architecture using transfer learning with the AlexNet model.
 
-## `train.py`
+### `train.py`
 Script to train the model on the cricket shot dataset.
 
-## `evaluate.py`
+### `evaluate.py`
 Script to evaluate the trained model on a test dataset and generate accuracy and loss metrics.
 
-## `predict.py`
+### `predict.py`
 Script to make predictions on new images using the previously trained and saved model.
+
+### `main.py`
+The entry point for the application. It handles training, evaluation, and prediction processes. 
 
 ## Results
 
