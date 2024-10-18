@@ -160,13 +160,8 @@ After training and evaluating the models, the following results were obtained:
 - **ImageNet Model**: The default ImageNet-pretrained AlexNet model, without any fine-tuning, achieved only **~25% accuracy** on the cricket shot dataset.
 
 #### Learning Curves
-<div style="display: flex; justify-content: center; align-items: center;">
-    <div style="margin: 10px;">
-        <img src="results/train_and_test_loss.png" alt="Learning Curve - Loss" style="width: 70%; height: auto;">
-    </div>
-    <div style="margin: 10px;">
-        <img src="results/train_and_test_accuracy.png" alt="Learning Curve - Accuracy" style="width: 70%; height: auto;">
-    </div>
+<div style="margin: 10px;">
+    <img src="results/train_and_test_accuracy.png" alt="Learning Curve - Accuracy" style="width: 70%; height: auto;">
 </div>
 
 
