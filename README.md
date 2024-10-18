@@ -14,9 +14,9 @@ AlexNet is a deep convolutional neural network that significantly advanced the f
 
 <br>
 
+#### Modified AlexNet model for Cricket Shot Detection
 <div style="text-align: center;">
-    <img src="images/model.png" alt="Model Architecture" style="width: auto; height: 150px;">
-    <p style="text-align: center; font-size: 14px;">Modified AlexNet model for Cricket Shot Detection</p>
+    <img src="images/model.png" alt="Model Architecture">
 </div>
 
 
@@ -159,14 +159,13 @@ After training and evaluating the models, the following results were obtained:
 - **Cricket Shot Model**: The model fine-tuned on the cricket shot dataset achieved an impressive accuracy of **98.31%**.
 - **ImageNet Model**: The default ImageNet-pretrained AlexNet model, without any fine-tuning, achieved only **~25% accuracy** on the cricket shot dataset.
 
+#### Learning Curves
 <div style="display: flex; justify-content: center; align-items: center;">
     <div style="margin: 10px;">
-        <img src="results/train_and_test_loss.png" alt="Learning Curve - Loss" style="width: 100%; height: auto;">
-        <p style="text-align: center; font-size: 14px;">Learning Curve for Loss</p>
+        <img src="results/train_and_test_loss.png" alt="Learning Curve - Loss" style="width: 70%; height: auto;">
     </div>
     <div style="margin: 10px;">
-        <img src="results/train_and_test_accuracy.png" alt="Learning Curve - Accuracy" style="width: 100%; height: auto;">
-        <p style="text-align: center; font-size: 14px;">Learning Curve for Accuracy</p>
+        <img src="results/train_and_test_accuracy.png" alt="Learning Curve - Accuracy" style="width: 70%; height: auto;">
     </div>
 </div>
 
