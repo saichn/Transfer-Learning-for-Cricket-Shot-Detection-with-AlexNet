@@ -4,9 +4,18 @@
 
 This repository contains code for detecting different types of cricket shots using **transfer learning** with a pre-trained AlexNet model. We focus on classifying four distinct cricket shots: **drive**, **leg glance-flick**, **pull shot**, and **sweep**. The approach leverages the feature extraction capabilities of the AlexNet architecture while adapting it for our specific classification task.
 
+<div style="text-align: center;">
+    <img src="images/overview.png" alt="Model Architecture">
+</div>
+
 ## About AlexNet
 
 AlexNet is a deep convolutional neural network that significantly advanced the field of computer vision and image classification. It consists of multiple convolutional layers followed by fully connected layers. For this project, we utilize a **pre-trained version of AlexNet**, trained on the [**IMAGENET1K_V1 dataset**](https://pytorch.org/docs/stable/torchvision/models.html#torchvision.models.alexnet). We freeze its feature layers to retain the learned patterns from ImageNet and only train the classification layers to adapt the model for our specific task of cricket shot detection. You can read more about the ImageNet dataset [here](http://www.image-net.org/) and find detailed information about AlexNet [here](https://pytorch.org/hub/pytorch_vision_alexnet/).
+
+<div style="text-align: center;">
+    <img src="images/model.png" alt="Model Architecture" >
+    <p>Modified AlexNet model used for Cricket Shot Detection.</p>
+</div>
 
 
 ## Table of Contents
@@ -64,6 +73,11 @@ This structure is expected by the training scripts:
         ├── legglance-flick/
         ├── pullshot/
         └── sweep/
+
+### Sample DataSet Images
+<div style="text-align: center;">
+    <img src="images/sample_dataset_images.png" alt="Sample Dataset Images">
+</div>
 
 ## Usage
 
@@ -135,6 +149,7 @@ Script to make predictions on new images using the previously trained and saved 
 ### `main.py`
 The entry point for the application. It handles training, evaluation, and prediction processes. 
 
+
 ## Results
 
 After training and evaluating the models, the following results were obtained:
@@ -142,10 +157,19 @@ After training and evaluating the models, the following results were obtained:
 - **Cricket Shot Model**: The model fine-tuned on the cricket shot dataset achieved an impressive accuracy of **98.31%**.
 - **ImageNet Model**: The default ImageNet-pretrained AlexNet model, without any fine-tuning, achieved only **~25% accuracy** on the cricket shot dataset.
 
-A visual comparison of these results can be found in the saved plot at `results/cricket_shot_model_vs_imagenet_model_accuracy_comparison.png`.
+<div style="display: flex; justify-content: center; align-items: center;">
+    <div style="margin: 10px;">
+        <img src="results/train_and_test_loss.png" alt="Learning Curve - Loss" style="width: 100%; height: auto;">
+        <p style="text-align: center;">Learning Curve - Loss</p>
+    </div>
+    <div style="margin: 10px;">
+        <img src="results/train_and_test_accuracy.png" alt="Learning Curve - Accuracy" style="width: 100%; height: auto;">
+        <p style="text-align: center;">Learning Curve - Accuracy</p>
+    </div>
+</div>
+
 
 This significant difference highlights the effectiveness of transfer learning and the need to fine-tune a pre-trained model for a specific task. The fine-tuned cricket shot model outperforms the ImageNet-pretrained model, demonstrating that adapting the classification layers to recognize cricket-specific actions is crucial.
-
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.

@@ -158,7 +158,7 @@ def train_model(args, num_epochs, seed, device):
         "Loss",
         "Epochs vs Loss",
         highlight="min",
-        filename=os.path.join(args.results_path, "train_and_test_losses.png"),
+        filename=os.path.join(args.results_path, "train_and_test_loss.png"),
     )
     plot_curves(
         train_accuracies,
