@@ -5,16 +5,18 @@
 This repository contains code for detecting different types of cricket shots using **transfer learning** with a pre-trained AlexNet model. We focus on classifying four distinct cricket shots: **drive**, **leg glance-flick**, **pull shot**, and **sweep**. The approach leverages the feature extraction capabilities of the AlexNet architecture while adapting it for our specific classification task.
 
 <div style="text-align: center;">
-    <img src="images/overview.png" alt="Model Architecture">
+    <img src="images/overview.png" alt="Model Architecture" width="800">
 </div>
 
 ## About AlexNet
 
 AlexNet is a deep convolutional neural network that significantly advanced the field of computer vision and image classification. It consists of multiple convolutional layers followed by fully connected layers. For this project, we utilize a **pre-trained version of AlexNet**, trained on the [**IMAGENET1K_V1 dataset**](https://pytorch.org/docs/stable/torchvision/models.html#torchvision.models.alexnet). We freeze its feature layers to retain the learned patterns from ImageNet and only train the classification layers to adapt the model for our specific task of cricket shot detection. You can read more about the ImageNet dataset [here](http://www.image-net.org/) and find detailed information about AlexNet [here](https://pytorch.org/hub/pytorch_vision_alexnet/).
 
+<br>
+
 <div style="text-align: center;">
-    <img src="images/model.png" alt="Model Architecture" >
-    <p>Modified AlexNet model used for Cricket Shot Detection.</p>
+    <img src="images/model.png" alt="Model Architecture" style="width: auto; height: 150px;">
+    <p style="text-align: center; font-size: 14px;">Modified AlexNet model for Cricket Shot Detection</p>
 </div>
 
 
@@ -160,11 +162,11 @@ After training and evaluating the models, the following results were obtained:
 <div style="display: flex; justify-content: center; align-items: center;">
     <div style="margin: 10px;">
         <img src="results/train_and_test_loss.png" alt="Learning Curve - Loss" style="width: 100%; height: auto;">
-        <p style="text-align: center;">Learning Curve - Loss</p>
+        <p style="text-align: center; font-size: 14px;">Learning Curve for Loss</p>
     </div>
     <div style="margin: 10px;">
         <img src="results/train_and_test_accuracy.png" alt="Learning Curve - Accuracy" style="width: 100%; height: auto;">
-        <p style="text-align: center;">Learning Curve - Accuracy</p>
+        <p style="text-align: center; font-size: 14px;">Learning Curve for Accuracy</p>
     </div>
 </div>
 
