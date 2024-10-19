@@ -163,4 +163,5 @@ cython_debug/
 
 
 best_model.pth
+data/*
 

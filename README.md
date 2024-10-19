@@ -1,8 +1,8 @@
-# Cricket Shot Detection using Transfer Learning
+# Cricket Shot Classification using Transfer Learning
 
 ## Overview
 
-This repository contains code for detecting different types of cricket shots using **transfer learning** with a pre-trained AlexNet model. We focus on classifying four distinct cricket shots: **drive**, **leg glance-flick**, **pull shot**, and **sweep**. The approach leverages the feature extraction capabilities of the AlexNet architecture while adapting it for our specific classification task.
+This repository contains code for classifying different types of cricket shots using **transfer learning** with a pre-trained AlexNet model. We focus on classifying four distinct cricket shots: **drive**, **leg glance-flick**, **pull shot**, and **sweep**. The approach leverages the feature extraction capabilities of the AlexNet architecture while adapting it for our specific classification task.
 
 <div style="text-align: center;">
     <img src="images/overview.png" alt="Model Architecture" width="800">
@@ -10,11 +10,10 @@ This repository contains code for detecting different types of cricket shots usi
 
 ## About AlexNet
 
-AlexNet is a deep convolutional neural network that significantly advanced the field of computer vision and image classification. It consists of multiple convolutional layers followed by fully connected layers. For this project, we utilize a **pre-trained version of AlexNet**, trained on the [**IMAGENET1K_V1 dataset**](https://pytorch.org/docs/stable/torchvision/models.html#torchvision.models.alexnet). We freeze its feature layers to retain the learned patterns from ImageNet and only train the classification layers to adapt the model for our specific task of cricket shot detection. You can read more about the ImageNet dataset [here](http://www.image-net.org/) and find detailed information about AlexNet [here](https://pytorch.org/hub/pytorch_vision_alexnet/).
-
+AlexNet is a deep convolutional neural network that significantly advanced the field of computer vision and image classification. It consists of multiple convolutional layers followed by fully connected layers. For this project, we utilize a **pre-trained version of AlexNet**, trained on the [**IMAGENET1K_V1 dataset**](https://pytorch.org/docs/stable/torchvision/models.html#torchvision.models.alexnet). We freeze its feature layers to retain the learned patterns from ImageNet and only train the classification layers to adapt the model for our specific task of cricket shot classification. You can read more about the ImageNet dataset [here](http://www.image-net.org/) and find detailed information about AlexNet [here](https://pytorch.org/hub/pytorch_vision_alexnet/).
 <br>
 
-#### Modified AlexNet model for Cricket Shot Detection
+#### Modified AlexNet model for Cricket Shot Classification
 <div style="text-align: center;">
     <img src="images/model.png" alt="Model Architecture">
 </div>
@@ -44,8 +43,8 @@ AlexNet is a deep convolutional neural network that significantly advanced the f
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/cricket-shot-detection.git
-   cd cricket-shot-detection
+   git clone https://github.com/saichn/Transfer-Learning-with-AlexNet-for-Cricket-Shot-Classification.git
+   cd Transfer-Learning-with-AlexNet-for-Cricket-Shot-Classification
 
 2. Install the required Python packages
     ```bash
@@ -54,7 +53,7 @@ AlexNet is a deep convolutional neural network that significantly advanced the f
 3. Ensure you have a compatible GPU and CUDA installed if you want to run the model on a GPU.
 
 ## Dataset
-The dataset consists of images of different types of cricket shots. These images are organized into subdirectories representing different shot classes. The project includes utilities to split the dataset into training and testing sets. You can either download the dataset manually or automate it via Kaggle.
+The dataset consists of images of different types of cricket shots, including augmented images to enhance diversity. These images are organized into subdirectories representing different shot classes. The project includes utilities to split the dataset into training and testing sets. You can either download the dataset manually or automate it via Kaggle.
 
 ### Download the Dataset
 1. Manual Download:
@@ -65,7 +64,7 @@ The dataset consists of images of different types of cricket shots. These images
 2. Automated Download via Kaggle API:
    - If you've set up Kaggle API credentials, you can download and train the model using:
    ```bash
-       python train.py --download-data
+       python main.py --download-data
 
 This structure is expected by the training scripts:
 
@@ -110,34 +109,34 @@ This structure is expected by the training scripts:
 
  
 4. **Visualizing Results:**
-   - The predictions results will be displayed in your console, and sample images, loss/accuracy comparison will be saved as a PNG file in the `results` directory.
+   - The predictions results will be displayed in your console, and learning curves, sample images etc. will be saved as a PNG file in the `results` directory.
 
    
 ## Directory Structure
-    cricket-shot-detection/
+    Transfer-Learning-with-AlexNet-for-Cricket-Shot-Classification
     │
-    ├── data/                  # Directory for datasets
-    │   ├── raw/               # Original dataset
-    │   └── processed/         # Train/test split dataset
+    ├── data/                           # Directory for datasets
+    │   ├── raw/                        # Original dataset
+    │   └── processed/                  # Train/test split dataset
     │
-    ├── src/                   # Source code
-    │   ├── model.py           # Model definition
-    │   ├── utils.py           # Utility functions
-    │   ├── train.py           # Training script
-    │   ├── evaluate.py        # Evaluation script
-    │   └── predict.py         # Prediction script
+    ├── src/                            # Source code
+    │   ├── model.py                    # Model definition
+    │   ├── utils.py                    # Utility functions
+    │   ├── download_kaggl_dataset.py   # Script to download dataset from Kaggle
+    │   ├── train.py                    # Training script
+    │   ├── evaluate.py                 # Evaluation script
+    │   └── predict.py                  # Prediction script
     │
-    ├── results/               # Directory for saving results and plots
-    ├── checkpoints/           # Directory for saving trained models
-    ├── requirements.txt       # Python package dependencies
-    └── README.md              # Project documentation
+    ├── images/                         # Directory for README images
+    ├── results/                        # Directory for saving results and plots
+    ├── checkpoints/                    # Directory for saving trained models
+    ├── requirements.txt                # Python package dependencies
+    └── README.md                       # Project documentation
+    └── main.py                         # Entry point for the application
 
 ## Modules
-### `utils.py`
-Contains utility functions for setting seeds, un-normalizing images, displaying images, plotting training curves, and creating symbolic links for dataset organization.
-
-### `module.py`
-Defines the model architecture using transfer learning with the AlexNet model.
+### `main.py`
+The entry point for the application. It handles training, evaluation, and prediction processes. 
 
 ### `train.py`
 Script to train the model on the cricket shot dataset.
@@ -148,24 +147,32 @@ Script to evaluate the trained model on a test dataset and generate accuracy and
 ### `predict.py`
 Script to make predictions on new images using the previously trained and saved model.
 
-### `main.py`
-The entry point for the application. It handles training, evaluation, and prediction processes. 
+### `model.py`
+Defines the model architecture using transfer learning with the AlexNet model.
+
+### `utils.py`
+Contains utility functions for setting seeds, un-normalizing images, displaying images, plotting training curves, and creating symbolic links for dataset organization.
+
+### `download_kaggle_dataset.py`
+Downloads and prepares the cricket shot dataset from Kaggle for use in the project
 
 
 ## Results
 
 After training and evaluating the models, the following results were obtained:
 
-- **Cricket Shot Model**: The model fine-tuned on the cricket shot dataset achieved an impressive accuracy of **98.31%**.
-- **ImageNet Model**: The default ImageNet-pretrained AlexNet model, without any fine-tuning, achieved only **~25% accuracy** on the cricket shot dataset.
+- **Fine-Tuned Cricket Shot Model**: The model fine-tuned on the cricket shot dataset achieved an impressive accuracy of **98.31%**.
+- **ImageNet Pretrained Model**: The default ImageNet-pretrained AlexNet model, without any fine-tuning, achieved only **26.98% accuracy** on the cricket shot dataset.
 
-#### Learning Curves
+This stark difference highlights the effectiveness of transfer learning and underscores the importance of fine-tuning a pre-trained model for specific tasks.
+
+The learning curves (see below) illustrate an important aspect of the training process. While the fine-tuned model shows high training accuracy, it also begins to overfit after just a few epochs, as indicated by the decline in test accuracy. This behavior is expected given the relatively small size of the cricket shot dataset compared to the larger ImageNet dataset.
 <div style="margin: 10px;">
     <img src="results/train_and_test_accuracy.png" alt="Learning Curve - Accuracy" style="width: 70%; height: auto;">
 </div>
 
+In summary, the results highlight the effectiveness of transfer learning for cricket shot classification. The fine-tuned cricket shot model significantly outperforms the ImageNet-pretrained model, demonstrating the critical role of adapting classification layers to recognize cricket-specific actions. Future work may focus on addressing overfitting to further improve model performance.
 
-This significant difference highlights the effectiveness of transfer learning and the need to fine-tune a pre-trained model for a specific task. The fine-tuned cricket shot model outperforms the ImageNet-pretrained model, demonstrating that adapting the classification layers to recognize cricket-specific actions is crucial.
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
